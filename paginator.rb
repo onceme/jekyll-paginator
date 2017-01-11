@@ -112,7 +112,7 @@ module Jekyll
 
     def generate(site)
         categories = {}
-        site.posts.each {|p| p.categories.each {|c| (categories[c] ||= []) << p } }
+        site.posts.docs.each {|p| p['categories'].each {|c| (categories[c] ||= []) << p } }
 
         # Read some configurations
         config = site.config['categories'] || {}
@@ -120,8 +120,8 @@ module Jekyll
         generateAll = config['generate_all'] || false
         details = config['details'] || {}
 
-        # Keep generated files
-        site.config['keep_files'] << dir unless site.config['keep_files'].include?(dir)
+        # Keep generated files FIXME: cause crash while generating blog
+        # site.config['keep_files'] << dir unless site.config['keep_files'].include?(dir)
 
         # Generate pages per category
         categories.each do |category, list|
